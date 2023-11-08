@@ -1,6 +1,9 @@
 import discord
 import responses
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 async def send_message(message, user_message, is_private):
     try:
         response = responses.get_response(user_message)
@@ -10,7 +13,7 @@ async def send_message(message, user_message, is_private):
         print(e)
 
 def run_discord_bot():
-    TOKEN = 'MTE3MTU2ODkyMDMyMzQzMjQ5OA.G2aVg9.GAuPwNAyvKBL4PZfHYGK1_6xW3Iz1xcM3l9DNs'
+    TOKEN = os.getenv('API_KEY')
     intents = discord.Intents.default()
     intents.members = True
     intents.message_content = True
@@ -30,7 +33,7 @@ def run_discord_bot():
         user_message = str(message.content)
         channel = str(message.channel)
 
-        print(f'{username} said the following "{user_message}" in ({channel})')
+        print(f'{username} said the following: "{user_message}" in ({channel})')
 
         if user_message[0] == '?':
             user_message = user_message[1:]
